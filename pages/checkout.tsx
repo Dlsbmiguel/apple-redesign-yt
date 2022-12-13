@@ -10,7 +10,7 @@ import CheckoutProduct from "../components/CheckoutProduct";
 import Currency from "react-currency-formatter";
 import { Stripe } from "stripe";
 import { fetchPostJSON } from "../utils/apiHelpers";
-import getStripe from "../utils/getStripeJS";
+import getStripe from "../utils/getStripejs";
 
 const Checkout = () => {
   const items = useSelector(selectBasketItems);
