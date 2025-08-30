@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import {
-  SearchIcon,
+  MagnifyingGlassIcon,
   ShoppingBagIcon,
   UserIcon,
-} from "@heroicons/react/outline";
+} from "@heroicons/react/24/outline";
 import { selectBasketItems } from "../redux/basketSlice";
 import { useSelector } from "react-redux";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -43,7 +43,7 @@ const Header = () => {
         </a>
       </div>
       <div className="flex items-center justify-center gap-x-4 md:w-1/5">
-        <SearchIcon className="headerIcon" />
+        <MagnifyingGlassIcon className="headerIcon" />
         <Link href="/checkout">
           <div className="relative cursor-pointer">
             {items.length > 0 && (

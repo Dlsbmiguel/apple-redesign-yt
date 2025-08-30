@@ -1,7 +1,7 @@
-import { ChevronDownIcon } from "@heroicons/react/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { urlFor } from "../sanity";
-import Currency from "react-currency-formatter";
+import Currency from "./Currency";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { removeFromBasket } from "../redux/basketSlice";

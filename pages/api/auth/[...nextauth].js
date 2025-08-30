@@ -7,14 +7,14 @@ export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
-      clientId: `${process.env.GOOGLE_CLIENT_ID}`,
-      clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
+      clientId: process.env.GOOGLE_CLIENT_ID || "placeholder",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "placeholder",
     }),
     // ...add more providers here
   ],
   session: {
     strategy: "jwt",
   },
-  secret: `${process.env.NEXTAUTH_SECRET}`,
+  secret: process.env.NEXTAUTH_SECRET || "placeholder-secret",
   adapter: SanityAdapter(sanityClient),
 });
