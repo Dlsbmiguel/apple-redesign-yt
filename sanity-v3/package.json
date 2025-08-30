@@ -1,0 +1,34 @@
+{
+  "name": "sanity-v3-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sanity v3 Studio for Apple Redesign",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy"
+  },
+  "keywords": [
+    "sanity",
+    "cms",
+    "headless",
+    "realtime",
+    "content"
+  ],
+  "dependencies": {
+    "@sanity/vision": "^4.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
+    "sanity": "^4.6.0",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "typescript": "^5.9.2"
+  }
+}
