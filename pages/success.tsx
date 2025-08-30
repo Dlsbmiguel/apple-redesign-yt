@@ -3,7 +3,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   ShoppingCartIcon,
-} from "@heroicons/react/outline";
+} from "@heroicons/react/24/outline";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Currency from "react-currency-formatter";
+import Currency from "../components/Currency";
 import { useMediaQuery } from "react-responsive";
 import Button from "../components/Button";
 import { fetchLineItems } from "../utils/fetchLineItems";

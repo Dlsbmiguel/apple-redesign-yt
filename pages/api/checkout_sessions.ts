@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { urlFor } from "../../sanity";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2022-11-15",
+  apiVersion: "2025-08-27.basil",
 });
 
 export default async function handler(

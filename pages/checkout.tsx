@@ -1,13 +1,13 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import { ChevronDownIcon } from "@heroicons/react/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "../components/Button";
 import { selectBasketItems, selectBasketTotal } from "../redux/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
-import Currency from "react-currency-formatter";
+import Currency from "../components/Currency";
 import { Stripe } from "stripe";
 import { fetchPostJSON } from "../utils/apiHelpers";
 import getStripe from "../utils/getStripejs";
@@ -22,10 +22,13 @@ const Checkout = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const groupedItems = items.reduce((results, item) => {
-      (results[item._id] = results[item._id] || []).push(item);
-      return results;
-    }, {} as { [key: string]: Product[] });
+    const groupedItems = items.reduce(
+      (results, item) => {
+        (results[item._id] = results[item._id] || []).push(item);
+        return results;
+      },
+      {} as { [key: string]: Product[] }
+    );
 
     setGroupedItemsInBasket(groupedItems);
   }, [items]);
