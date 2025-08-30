@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /appleredesignyt/node_modules
+/sanity-v3/node_modules
 
 # testing
 /coverage
@@ -15,6 +16,16 @@
 
 # production
 /build
+
+# Sanity Studio
+/sanity-v3/dist
+/sanity-v3/.sanity
+/sanity-v3/.sanity/runtime
+/sanity-v3/.env
+/sanity-v3/.env.local
+/sanity-v3/.env.development.local
+/sanity-v3/.env.test.local
+/sanity-v3/.env.production.local
 
 # misc
 .DS_Store
@@ -36,3 +47,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
