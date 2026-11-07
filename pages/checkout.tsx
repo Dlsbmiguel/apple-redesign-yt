@@ -2,36 +2,28 @@ import Head from "next/head";
 import Header from "../components/Header";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "../components/Button";
 import { selectBasketItems, selectBasketTotal } from "../redux/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
 import Currency from "../components/Currency";
-import { Stripe } from "stripe";
+import type Stripe from "stripe";
 import { fetchPostJSON } from "../utils/apiHelpers";
-import getStripe from "../utils/getStripejs";
 
 const Checkout = () => {
   const items = useSelector(selectBasketItems);
   const basketTotal = useSelector(selectBasketTotal);
   const router = useRouter();
-  const [groupedItemsInBasket, setGroupedItemsInBasket] = useState(
-    {} as { [key: string]: Product[] }
-  );
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const groupedItems = items.reduce(
-      (results, item) => {
-        (results[item._id] = results[item._id] || []).push(item);
-        return results;
-      },
-      {} as { [key: string]: Product[] }
-    );
-
-    setGroupedItemsInBasket(groupedItems);
-  }, [items]);
+  const groupedItemsInBasket = items.reduce(
+    (results, item) => {
+      (results[item._id] = results[item._id] || []).push(item);
+      return results;
+    },
+    {} as { [key: string]: Product[] }
+  );
 
   const createCheckoutSession = async () => {
     setLoading(true);
@@ -44,23 +36,12 @@ const Checkout = () => {
     // Internal server error
     if ((checkOutSession as any).statusCode === 500) {
       console.error((checkOutSession as any).message);
+      setLoading(false);
       return;
     }
 
     // Redirect to Stripe Checkout
-    const stripe = await getStripe();
-    const { error } = await stripe!.redirectToCheckout({
-      // Make the id field from the Checkout Session creation API response
-      // available to this file, so you can provide it as argument here
-      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-      sessionId: checkOutSession.id,
-    });
-
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
-    console.warn(error.message);
-    setLoading(false);
+    window.location.assign(checkOutSession.url!);
   };
 
   return (

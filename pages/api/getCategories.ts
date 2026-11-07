@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { groq } from "next-sanity";
+import groq from "groq";
 import { sanityClient } from "../../sanity";
 
 const query = groq`*[_type == "category"] {

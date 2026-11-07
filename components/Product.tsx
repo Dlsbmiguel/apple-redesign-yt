@@ -25,8 +25,8 @@ const Product = ({ product }: Props) => {
         <Image
           src={urlFor(product.image[0]).url()}
           alt="product image"
-          layout="fill"
-          objectFit="contain"
+          fill
+          className="object-contain"
         />
       </div>
       <div className="flex flex-1 items-center justify-between space-x-3">
@@ -35,7 +35,7 @@ const Product = ({ product }: Props) => {
           <p>{product.price}</p>
         </div>
         <div
-          className="flex h-16 w-16 flex-shrink-0 cursor-pointer items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 to-violet-500 md:h-[70px] md:w-[70px]"
+          className="flex h-16 w-16 shrink-0 cursor-pointer items-center justify-center rounded-full bg-linear-to-tr from-pink-500 to-violet-500 md:h-[70px] md:w-[70px]"
           onClick={addItemToBasket}
         >
           <ShoppingCartIcon className="h-8 w-8 text-white" />

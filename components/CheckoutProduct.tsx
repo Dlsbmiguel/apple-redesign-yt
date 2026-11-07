@@ -24,8 +24,8 @@ const CheckoutProduct = ({ id, items }: Props) => {
       <div className="relative h-44 w-44">
         <Image
           src={urlFor(items[0].image[0]).url()}
-          layout="fill"
-          objectFit="contain"
+          fill
+          className="object-contain"
           alt={`${items[0].title} image`}
         />
       </div>

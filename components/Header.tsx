@@ -21,8 +21,8 @@ const Header = () => {
           <div className="relative w-5 h-10 transition opacity-75 cursor-pointer hover:opacity-100 ">
             <Image
               src="http://rb.gy/vsvv2o"
-              layout="fill"
-              objectFit="contain"
+              fill
+              className="object-contain"
               alt="image"
             />
           </div>
@@ -47,7 +47,7 @@ const Header = () => {
         <Link href="/checkout">
           <div className="relative cursor-pointer">
             {items.length > 0 && (
-              <span className=" absolute -right-1 -top-1 z-50 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-violet-500 text-[10px] text-white">
+              <span className=" absolute -right-1 -top-1 z-50 flex h-4 w-4 items-center justify-center rounded-full bg-linear-to-r from-pink-500 to-violet-500 text-[10px] text-white">
                 {items.length}
               </span>
             )}
