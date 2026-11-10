@@ -1,10 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 import { urlFor } from "../../sanity";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-10-28.endive",
-});
+import { stripe } from "../../utils/stripe";
 
 export default async function handler(
   req: NextApiRequest,

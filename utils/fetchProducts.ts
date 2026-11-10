@@ -1,10 +1,13 @@
-export const fetchProducts = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getProducts`
-  );
+import groq from "groq";
+import { sanityClient } from "../sanity";
 
-  const data = await response.json();
-  const products: Product[] = data.products;
+const query = groq`*[_type == "product"] {
+  _id,
+  ...
+} | order(_createdAt asc)`;
+
+export const fetchProducts = async () => {
+  const products: Product[] = await sanityClient.fetch(query);
 
   return products;
 };

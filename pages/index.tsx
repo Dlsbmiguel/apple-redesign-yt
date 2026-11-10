@@ -7,7 +7,8 @@ import { fetchCategories } from "../utils/fetchCategories";
 import { fetchProducts } from "../utils/fetchProducts";
 import Product from "../components/Product";
 import Basket from "../components/Basket";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import type { Session } from "next-auth";
 interface Props {
   categories: Category[];
@@ -82,7 +83,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const categories = await fetchCategories();
   const products = await fetchProducts();
-  const session = await getSession(context);
+  const session = await getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
   return {
     props: {

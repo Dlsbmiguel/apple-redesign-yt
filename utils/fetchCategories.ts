@@ -1,10 +1,13 @@
-export const fetchCategories = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getCategories`
-  );
+import groq from "groq";
+import { sanityClient } from "../sanity";
 
-  const data = await response.json();
-  const categories: Category[] = data.categories;
+const query = groq`*[_type == "category"] {
+  _id,
+  ...
+}`;
+
+export const fetchCategories = async () => {
+  const categories: Category[] = await sanityClient.fetch(query);
 
   return categories;
 };
