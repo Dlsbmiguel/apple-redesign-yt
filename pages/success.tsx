@@ -223,8 +223,16 @@ export default Success;
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
 }) => {
-  const sessionId = query.session_id as string;
-  const products = await fetchLineItems(sessionId);
+  const sessionId = query.session_id as string | undefined;
+
+  // A missing or unknown Checkout Session id (an old or hand-typed link) has
+  // no order to show, so send the visitor back to the store
+  const products = sessionId
+    ? await fetchLineItems(sessionId).catch(() => null)
+    : null;
+  if (!products) {
+    return { redirect: { destination: "/", permanent: false } };
+  }
 
   return {
     props: {
