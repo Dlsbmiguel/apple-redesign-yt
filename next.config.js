@@ -2,11 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [
-      "rb.gy",
-      "cdn.sanity.io",
-      "gravatar.com",
-      "lh3.googleusercontent.com",
+    remotePatterns: [
+      { hostname: "rb.gy" },
+      { hostname: "cdn.sanity.io" },
+      { hostname: "gravatar.com" },
+      { hostname: "www.gravatar.com" },
+      { hostname: "lh3.googleusercontent.com" },
     ],
   },
 };

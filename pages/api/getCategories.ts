@@ -1,11 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { groq } from "next-sanity";
-import { sanityClient } from "../../sanity";
-
-const query = groq`*[_type == "category"] {
-  _id,
-  ...
-}`;
+import { fetchCategories } from "../../utils/fetchCategories";
 
 interface Data {
   categories: Category[];
@@ -15,6 +9,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const categories = await sanityClient.fetch(query);
+  const categories = await fetchCategories();
   res.status(200).json({ categories });
 }

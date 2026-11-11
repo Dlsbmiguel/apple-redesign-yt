@@ -1,10 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 import { urlFor } from "../../sanity";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-08-27.basil",
-});
+import { stripe } from "../../utils/stripe";
 
 export default async function handler(
   req: NextApiRequest,
@@ -28,7 +25,7 @@ export default async function handler(
 
     try {
       const params: Stripe.Checkout.SessionCreateParams = {
-        payment_method_types: ["card"],
+        allowed_payment_method_types: ["card"],
         // shipping_address_collection: {
         //     allowed_countries: ["US", "CA"],
         // },

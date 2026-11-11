@@ -7,7 +7,8 @@ import { fetchCategories } from "../utils/fetchCategories";
 import { fetchProducts } from "../utils/fetchProducts";
 import Product from "../components/Product";
 import Basket from "../components/Basket";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import type { Session } from "next-auth";
 interface Props {
   categories: Category[];
@@ -37,7 +38,7 @@ const Home = ({ categories, products }: Props) => {
       <main className="relative h-[200vh] bg-[#E7ECEE]">
         <Landing />
       </main>
-      <section className="relative z-40 -mt-[100vh] min-h-screen bg-[#1B1B1B]">
+      <section className="relative z-40 mt-[-100vh] min-h-screen bg-[#1B1B1B]">
         <div className="py-16 space-y-10">
           <h1 className="text-4xl font-medium tracking-wide text-center text-white md:text-5xl">
             New Promos
@@ -82,7 +83,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const categories = await fetchCategories();
   const products = await fetchProducts();
-  const session = await getSession(context);
+  const session = await getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
   return {
     props: {

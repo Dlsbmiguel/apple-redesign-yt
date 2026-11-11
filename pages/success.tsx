@@ -10,7 +10,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Currency from "../components/Currency";
 import { useMediaQuery } from "react-responsive";
 import Button from "../components/Button";
@@ -20,20 +20,19 @@ interface Props {
   products: StripeProduct[];
 }
 
+const subscribe = () => () => {};
+
 function Success({ products }: Props) {
   const router = useRouter();
   const { session_id } = router.query;
-  const [mounted, setMounted] = useState(false);
+  // false on the server and during hydration, true once mounted on the client
+  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
   const [showOrderSummary, setShowOrderSummary] = useState(false);
   const subtotal = products.reduce(
     (acc, product) => acc + product.price.unit_amount / 100,
     0
   );
   const { data: session } = useSession();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // showOrderSummary always true for desktop but only conditionally true for mobile
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
@@ -54,8 +53,8 @@ function Success({ products }: Props) {
           <div className="relative w-8 h-16 ml-4 transition cursor-pointer lg:hidden">
             <Image
               src="https://rb.gy/vsvv2o"
-              layout="fill"
-              objectFit="contain"
+              fill
+              className="object-contain"
               alt="Apple Logo"
             />
           </div>
@@ -68,8 +67,8 @@ function Success({ products }: Props) {
             <div className="relative hidden w-12 h-24 transition cursor-pointer ml-14 lg:inline-flex">
               <Image
                 src="https://rb.gy/vsvv2o"
-                layout="fill"
-                objectFit="contain"
+                fill
+                className="object-contain"
                 alt="Apple Logo"
               />
             </div>
@@ -164,8 +163,8 @@ function Success({ products }: Props) {
                         <div className="relative rounded-md h-7 w-7 animate-bounce">
                           <Image
                             src="https://rb.gy/vsvv2o"
-                            layout="fill"
-                            objectFit="contain"
+                            fill
+                            className="object-contain"
                             alt="product"
                           />
                         </div>
@@ -224,8 +223,16 @@ export default Success;
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
 }) => {
-  const sessionId = query.session_id as string;
-  const products = await fetchLineItems(sessionId);
+  const sessionId = query.session_id as string | undefined;
+
+  // A missing or unknown Checkout Session id (an old or hand-typed link) has
+  // no order to show, so send the visitor back to the store
+  const products = sessionId
+    ? await fetchLineItems(sessionId).catch(() => null)
+    : null;
+  if (!products) {
+    return { redirect: { destination: "/", permanent: false } };
+  }
 
   return {
     props: {

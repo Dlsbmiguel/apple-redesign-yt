@@ -13,7 +13,7 @@ const Basket = () => {
     <Link href="/checkout">
       <div className="fixed z-50 flex items-center justify-center w-16 h-16 bg-gray-300 rounded-full cursor-pointer bottom-10 right-10">
         {items.length > 0 && (
-          <span className="absolute -right-2 -top-2 z-50 flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-violet-500 text-[10px] text-white">
+          <span className="absolute -right-2 -top-2 z-50 flex h-7 w-7 items-center justify-center rounded-full bg-linear-to-r from-pink-500 to-violet-500 text-[10px] text-white">
             {items.length}
           </span>
         )}

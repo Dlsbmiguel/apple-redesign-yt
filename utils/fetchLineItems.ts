@@ -1,12 +1,7 @@
+import { stripe } from "./stripe";
+
 export const fetchLineItems = async (sessionId: string) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getSession?sessionId=${sessionId}`
-  );
+  const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
 
-  if (!res.ok) return;
-
-  const data = await res.json();
-  const products = data.session.data;
-
-  return products;
+  return lineItems.data as unknown as StripeProduct[];
 };
